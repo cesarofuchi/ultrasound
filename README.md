@@ -7,3 +7,8 @@ This repository have ultrasound files for signal processing
 ## Time of Flight
 
 ## Doppler
+We implemented 4 algorithms 
+autocorrelation
+extended autocorrelation
+staggered trigger
+cross-correlation
