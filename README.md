@@ -1,16 +1,19 @@
-# ultrasound matlab reposioty
+# Ultrasound MatLab Repository
 
-This repository have ultrasound matlab signal processing files.
+This repository has MatLab based ultrasound signal processing scripts.
 
-It is part of a multiphase flow research group for cientific research
+It is part of a multiphase flow research group for cientific research.
 
 ## Energy
 
 ## Time of Flight
 
 ## Doppler Velocity
-We implemented 4 algorithms 
-autocorrelation
-extended autocorrelation
-staggered trigger
-cross-correlation
+
+We implemented 4 velocity estimators algorithms, namely: 
+
+- Autocorrelation Method (ACM)
+- Extended Autocorrelation Method (EAM)
+- Cross-Correlation Method (CCM)
+- Staggered Trigger Method (STM)
+
