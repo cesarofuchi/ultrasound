@@ -16,7 +16,7 @@ fclose(fid);
 
 mystruct=util.xml2struct2(file);
 % initiate a object
-usObj=sensor.Ultrasonic;
+usObj=Ultrasonic;
 usObj.filename=name;
 usObj.filepath=filepath;
 usObj.fs=0;
