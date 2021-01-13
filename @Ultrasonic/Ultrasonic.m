@@ -66,7 +66,7 @@ classdef Ultrasonic
           
          end
          
-         function US = tof3(this,dados,periodo_de_interesse1,periodo_de_interesse2,vel_som, corte,out)
+         function US = tofMinPeak(this,dados,periodo_de_interesse1,periodo_de_interesse2,vel_som, corte,out)
             %US_tt Cálculo de tempo de trânsito por amplitude
             %   [tt]=US_tt(dados,freq_transd,ciclos_onda,freq_amostragem,periodo_de_intere
             %   sse1,periodo_de_interesse2)
