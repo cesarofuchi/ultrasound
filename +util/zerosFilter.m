@@ -1,4 +1,4 @@
-%%
+%% use to smooth echo distances
 function fdata=zerosFilter(data)
 
     n=size(data,2)
