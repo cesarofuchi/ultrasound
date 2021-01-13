@@ -20,24 +20,23 @@ classdef Ultrasonic
     
     methods (Static)
       
-       function usObj = loadData(file,channels,samples)
+       function usObj = loadData(file,channels)
            
            if file < 0
                 msg = ['Error to open file:' file];
                 sprintf(msg)
                 return
            end
-           import sensor.Ultrasonic;
+           %import sensor.Ultrasonic;
            usObj = Ultrasonic;
            
            %% separe this after
            usObj = usObj.readPXI5752Xml(file);
            
            usObj.cycles = 4;
-           usObj.initTime = System.IO.File.GetCreationTime(file); 
-           usObj.samples = samples;
+           usObj.initTime = System.IO.File.GetCreationTime(file);           
            
-           fn = usObj.nwaves*channels*samples;
+           fn = usObj.nwaves*channels*usObj.samples;
            data = int16(zeros(1,fn));
            
            %%
@@ -50,14 +49,13 @@ classdef Ultrasonic
            end
            % fread(fileID,sizeA,precision,skip,machinefmt) %
            data = fread(f,fn,'int16=>int16',0,'b');           
-           usObj.data = reshape(data(1:fn),samples,usObj.nwaves);
+           usObj.data = reshape(data(1:fn),usObj.samples,usObj.nwaves);
            
        end    
     end
     
     methods(Access = private)
-        usObj = readPXI5752Xml(usObj,file)
-        sound_speed = water_by_temperature(temp) 
+        usObj = readPXI5752Xml(usObj,file)        
         US = tofFirstPeak(this,dados,periodo_de_interesse1,periodo_de_interesse2,vel_som, corte,out)
         US = tofMaxPeak(this,dados,range1,range2,vel_som, corte,out,sinalRef)
     end
