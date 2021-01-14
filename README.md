@@ -5,7 +5,7 @@ This repository has MatLab based ultrasound signal processing scripts.
 It is part of a multiphase flow research group for cientific research.
 
 ## Energy
-
+Med new energy
 ## Time of Flight
 We
 tofFirstPeak
@@ -19,4 +19,5 @@ We implemented 4 velocity estimators algorithms, namely:
 - Extended Autocorrelation Method (EAM)
 - Cross-Correlation Method (CCM)
 - Staggered Trigger Method (STM)
+
 
