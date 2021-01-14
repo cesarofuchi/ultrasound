@@ -50,6 +50,7 @@ classdef Ultrasonic
            % fread(fileID,sizeA,precision,skip,machinefmt) %
            data = fread(f,fn,'int16=>int16',0,'b');           
            usObj.data = reshape(data(1:fn),usObj.samples,usObj.nwaves);
+           usObj.workData=usObj.data;
            
        end    
     end

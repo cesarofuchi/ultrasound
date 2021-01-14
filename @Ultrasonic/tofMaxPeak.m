@@ -1,24 +1,24 @@
-function US= tofMaxPeak(this,dados,range1,range2,vel_som, corte,out,sinalRef)
-            %tofMax Cálculo de tempo de trânsito por amplitude
-            %   [tt]=US_tt(dados,freq_transd,ciclos_onda,freq_amostragem,periodo_de_intere
-            %   sse1,periodo_de_interesse2)
-            %   dados: forma de onda
-            %   freq_transd: frequência do transdutor
-            %   ciclos_onda: quantos ciclos possui a forma de onda
-            %   freq_amostragem: frequência de amostragem dos dados
-            %   range1: período onde pode estar o primeiro eco
-            %   range2: período onde pode estar o segundo eco
-            %   corte: % de corte desejado, caso não encontre nada, retorna zero
-            %
-            %   US: retorna diversas variaveis relacionadas ao eco
-            %
-            %   See also US_tt, US_lerDados.
-            %   Author(s): Ofuchi, C.Y.            
-            %   $Revision: 1.0 $  $Date: 02/11/20$
-            
-            %----------------------------------------------------------
-            % Técnica mais simples, apenas para encontrar o máximo
-            %----------------------------------------------------------           
+function US= tofMaxPeak(usObj,dados,range1,range2,vel_som, corte,out,sinalRef)
+%tofMax Cálculo de tempo de trânsito por amplitude
+%   [tt]=US_tt(dados,freq_transd,ciclos_onda,freq_amostragem,periodo_de_intere
+%   sse1,periodo_de_interesse2)
+%   dados: forma de onda
+%   freq_transd: frequência do transdutor
+%   ciclos_onda: quantos ciclos possui a forma de onda
+%   freq_amostragem: frequência de amostragem dos dados
+%   range1: período onde pode estar o primeiro eco
+%   range2: período onde pode estar o segundo eco
+%   corte: % de corte desejado, caso não encontre nada, retorna zero
+%
+%   US: retorna diversas variaveis relacionadas ao eco
+%
+%   See also US_tt, US_lerDados.
+%   Author(s): Ofuchi, C.Y.            
+%   $Revision: 1.0 $  $Date: 02/11/20$
+
+%----------------------------------------------------------
+% Técnica mais simples, apenas para encontrar o máximo
+%----------------------------------------------------------           
             
                      
             %dados=dados-repmat(mean(dados)',[1 size(dados,1)])';
@@ -54,7 +54,7 @@ function US= tofMaxPeak(this,dados,range1,range2,vel_som, corte,out,sinalRef)
                 
             US.pos1=posicao_eco1;
             US.pos2=posicao_eco2+range2(1);
-            US.tt=(US.pos2-US.pos1)/this.fs;
+            US.tt=(US.pos2-US.pos1)/usObj.fs;
             US.max2=max2;
 
             %tt=(posicao_eco2-posicao_eco1);
