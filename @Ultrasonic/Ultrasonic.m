@@ -54,7 +54,7 @@ classdef Ultrasonic
        end    
     end
     
-    methods(Access = private)
+    methods(Access = public)
         usObj = readPXI5752Xml(usObj,file)        
         US = tofFirstPeak(this,dados,periodo_de_interesse1,periodo_de_interesse2,vel_som, corte,out)
         US = tofMaxPeak(this,dados,range1,range2,vel_som, corte,out,sinalRef)

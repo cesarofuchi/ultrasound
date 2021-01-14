@@ -26,12 +26,18 @@ classdef UltrasonicDoppler
              dopplerObj.ovs = ovs;
              dopplerObj.ovt = ovt;
              
+             %% Matched Filter
+             impulse_response=sin(2*pi*usObj.fc*(0:1/usObj.fs:usObj.cycles/usObj.fc));
+             impulse_response=impulse_response.*hamming(max(size(impulse_response)))';
+             b = flipud(impulse_response);
+             dataf1=filter(b,1,usObj.workData);
+             
              % create demodulated data             
-             h = hilbert(usObj.workData);
+             h = hilbert(dataf1);
              t = (0:1/usObj.fs:size(h,1)*(1/usObj.fs)-(1/usObj.fs))';
              t = repmat(t,1,size(h,2));
              % dopplerObj.iq = h.*exp(-1i*2*pi*(usObj.fc)*t);
-             dopplerObj.iq = h;
+             dopplerObj.iq = h.*exp(-1i*2*pi*(usObj.fc)*t);
              dopplerObj.t = t;
          end
         
@@ -57,7 +63,8 @@ classdef UltrasonicDoppler
     methods%(Access = private)
            ACM = AutoCorrelation(usdObj,c,subsampling,j,k);
            CCM = TimeShiftEstimator(usdObj,d,c,j,k);
-           EAM = ExtAutoCorrelation(usdObj,dbubble,c,dif,NpRange,j,k);
+           %EAM = ExtAutoCorrelation(usdObj,dbubble,c,dif,NpRange,j,k);
+           EAM= ExtAutoCorrelation(usdObj,c,NpRange);
            STT = StaggeredTriggerTorres(usdObj,diq,c,T1,T2,noisepw,m,n,j,k)
     end
 end

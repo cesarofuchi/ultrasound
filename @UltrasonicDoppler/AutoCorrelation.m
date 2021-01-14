@@ -1,4 +1,4 @@
-function ACM = AutoCorrelation(usdObj,c,subsampling,j,k)
+function ACM = AutoCorrelation(usdObj,c)
 % Autocorrelation Method
 %
 % Estima a velocidade radial (componente ao longo da direção do feixe do 
@@ -30,13 +30,13 @@ fprf = usdObj.usObj.fprf;
 fs   = usdObj.usObj.fs;
 fc   = usdObj.usObj.fc;
 iq   = usdObj.iq;
-Ns   = usdObj.ns(k);
-Nc   = usdObj.nc(j);
+Ns   = usdObj.ns;
+Nc   = usdObj.nc;
 ovs  = usdObj.ovs;
 ovt  = usdObj.ovt;
  
 % NoisePower=mean(std(iq'))+3*abs(std(std(iq')));
-% disp('ACM running')
+disp('ACM running')
 
 % adapta os num de amostras espaciais para ser janelado com ov e com o Ns
 % por meio de adicção de valores zeros no final do vetor (zeros pads)

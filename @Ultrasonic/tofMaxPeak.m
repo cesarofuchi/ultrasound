@@ -20,7 +20,7 @@ function US= tofMaxPeak(this,dados,range1,range2,vel_som, corte,out,sinalRef)
             % Técnica mais simples, apenas para encontrar o máximo
             %----------------------------------------------------------           
             
-            
+                     
             %dados=dados-repmat(mean(dados)',[1 size(dados,1)])';
             %dados=detrend(dados(1:end-1));
             %size(dados);
