@@ -1,4 +1,4 @@
-function CCM = TimeShiftEstimator(usdObj,d,c,j,k)
+function CCM = TimeShiftEstimator(usdObj,c)
 % Estima a velocidade radial através do atraso de tempo dos pulsos
 % d matriz de dados m pontos x n pulsos)
 % c velocidade do som no meio
@@ -19,14 +19,14 @@ Nc = usdObj.nc(j);
 ovs = usdObj.ovs;
 ovt = usdObj.ovt;
 
-% disp('TimeShiftEstimator running');
-% tic;
+disp('TimeShiftEstimator running');
+tic;
 
 % adapta os num de amostras espaciais para ser janelado com ovs
-resto = rem(size(d,1)-Ns,Ns*ovs);
+resto = rem(size(usdObj.usObj.samples,1)-Ns,Ns*ovs);
 if resto ~= 0
-    pad_n = uint8(Ns*ovs-rem(size(d,1)-Ns,Ns*ovs));
-    pad = zeros(pad_n,size(d,2));
+    pad_n = uint8(Ns*ovs-rem(usdObj.usObj.samples-Ns,Ns*ovs));
+    pad = zeros(pad_n,size(usdObj.usObj.samples,2));
     d = [d ; pad];
 end
 % zero pads temporal
@@ -58,17 +58,7 @@ for i = 1 : nchannelst % varre todos os canais temporais
                 dataf = d(ps_i-Ns:ps_i+2*Ns-1,p_i:p_f);
             end
         end
-        % usado no bifásico (slug-flow) ===================================
-        dbbl = dataf;
-        
-        media(j,i) = mean(mean(abs(dbbl)));
-                      
-        if media(j,i) < 80
-            media_msk(j,i) = 0;
-        else
-            media_msk(j,i) = 1;
-        end
-        % =================================================================        
+       
         for t = 1 : Nc-1
 %             w=1;
 %             corr(Ns+1,t)=dataf(1:Ns,t+1)'*data(1:Ns,t);
