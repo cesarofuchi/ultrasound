@@ -32,7 +32,11 @@ for i=1:size(mystruct.LVData.I32, 2)
     elseif strfind(a.Name.Text, 'Transducer Frequency')
         usObj.fc=str2num(a.Val.Text);
         if(usObj.fc<1e6)
-            usObj.fc=usObj.fc*1e6;
+            if(usObj.fc>1000)
+                usObj.fc=usObj.fc*1e3;
+            else
+                usObj.fc=usObj.fc*1e6;
+            end            
         end
     elseif strfind(a.Name.Text, 'Pulse Repetition Frequency')
         usObj.fprf=str2num(a.Val.Text);  
