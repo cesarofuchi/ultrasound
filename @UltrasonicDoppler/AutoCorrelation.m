@@ -34,7 +34,7 @@ Ns   = usdObj.ns;
 Nc   = usdObj.nc;
 ovs  = usdObj.ovs;
 ovt  = usdObj.ovt;
- 
+ subsampling=1
 % NoisePower=mean(std(iq'))+3*abs(std(std(iq')));
 disp('ACM running')
 

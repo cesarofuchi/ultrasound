@@ -19,20 +19,40 @@ classdef Ultrasonic
     end
     
     methods (Static)
-        function usObj = loadData(file,channels)
+        function usObj = loadData(file,channels,varargin)
             
            if file < 0
-                msg = ['Error to open file:' folder];
+                msg = ['Error to open file:' file];
                 sprintf(msg)
                 return
            end
+           
+           iter=1
+           
+           
            %import sensor.Ultrasonic;
            usObj = Ultrasonic;
            
            %% separe this after
            usObj = usObj.readPXI5752Xml(file);
-           
            usObj.cycles = 4;
+           while ~isempty(varargin)
+                switch lower(varargin{1})
+                      case 'samples'
+                          usObj.samples=varargin{2};
+                      case 'fc'
+                          usObj.fc=varargin{2};
+                      case 'cycles'
+                          usObj.cycles=varargin{2};
+                      %otherwise
+                      %    error(['Unexpected option: ' varargin{1}])
+                 end
+                 varargin(1) = [];
+                  
+           end
+           
+           
+           
            usObj.initTime = System.IO.File.GetCreationTime(file);           
            
            fn = usObj.nwaves*channels*usObj.samples;
@@ -46,25 +66,39 @@ classdef Ultrasonic
                 sprintf(msg)
                 return
            end
+           
            % fread(fileID,sizeA,precision,skip,machinefmt) %
-           data = fread(f,fn,'int16=>int16',0,'b');           
+           data = fread(f,fn,'int16=>int16',0,'b');    
+           data=double(data);
+           %raw data in ADC 12 bits data. Need to normalize to Volts.
+           adc_bits=12;
+           data=data./(2^adc_bits);
+           
+           fclose(f);
            usObj.data = reshape(data(1:fn),usObj.samples,usObj.nwaves);
            usObj.workData=usObj.data;
            
         end 
        
-       function usObj = loadFolder(folder,channels)
+       function usObj = loadFolder(folder,channels,filter_type)
            
            if folder < 0
-                msg = ['Error to open file:' file];
+                msg = ['Error to open file:' folder];
                 sprintf(msg)
                 return
            end
            %find xml files
-           type='*.xml';
-           files = dir([folder type]);
-           files.name
+%           filter_type='*.xml';
+           files = dir([folder filter_type]);
+           files.name;
            files([files.isdir]) = [];
+           
+           if isempty(files)
+                msg = ['No files found using this filter:' filter_type ' or this path:' folder];
+                sprintf(msg)
+                return
+           end
+           
            
            % first file info          
            usObj = Ultrasonic;
@@ -98,7 +132,7 @@ classdef Ultrasonic
     
     methods(Access = public)
         usObj = readPXI5752Xml(usObj,file)        
-        US = tofFirstPeak(usObj,dados,periodo_de_interesse1,periodo_de_interesse2,vel_som, corte,out)
+        US = tofFirstPeak(usObj,dados,range1,range2,c, corte,out,sinalRef)
         US = tofMaxPeak(usObj,dados,range1,range2,vel_som, corte,out,sinalRef)
         us_map_diff=us_energy_diff(usObj,data,sStep,tStep)
     end

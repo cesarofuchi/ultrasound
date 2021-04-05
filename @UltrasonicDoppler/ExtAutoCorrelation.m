@@ -47,6 +47,7 @@ nchannelst=floor((size(iq,2)-Nc)/(ovt*Nc))+1;
 
 %inicializa a matriz de velocidade de saída do algoritmo
 vr=zeros(nchannels,nchannelst);
+lag_test=zeros(nchannels,nchannelst);
 desv=zeros(nchannels,nchannelst);
 
 
@@ -60,27 +61,16 @@ for i=1:nchannelst % varre todos os canais temporais
         ps_f=ps_i+Ns-1;
         data=iq(ps_i:ps_f,p_i:p_f);
         [Nsamples,M]=size(data);
-        
-%         index=1;
-%         for k=1:Nsamples
-            %  Find the proper data
-%         if dif==1
-%              vdata=(diff(data(1,:),1));
-%         else
-              vdata=(data(1,:));
-%         end
-            %  Calculate the autocorrelation and the velocity
-            if (abs(std(vdata)) > abs(RMS/500))
-                desv(j,i)=std(abs(vdata));
-                auto  = vdata(2:(M-1)) * vdata(1:(M-2))' ;
-%                 phi_est(index) =  atan2(imag(auto),real(auto));
-                phi_est =  atan2(imag(auto),real(auto));
-            else
-                phi_est=0;
-            end 
-%             index=index+1;
-%         end
-%         phi_auto=mean(phi_est);
+        vdata=sum(data,1);
+        %  Calculate the autocorrelation and the velocity
+        if (abs(std(vdata)) > abs(RMS/500))
+             desv(j,i)=std(abs(vdata));
+             auto  = vdata(2:(M-1)) * vdata(1:(M-2))' ;
+%            phi_est(index) =  atan2(imag(auto),real(auto));
+             phi_est =  atan2(imag(auto),real(auto));
+        else
+             phi_est=0;
+        end 
         phi_auto=phi_est;
         % Time shift estimator
         phi_possible=phi_auto+NpRange*2*pi;
@@ -103,6 +93,7 @@ for i=1:nchannelst % varre todos os canais temporais
             cross_s(w)=sum(ccross(w,:));
         end     
         [~,lag]=max(cross_s');
+        lag_test(j,i)=lag;
         phi_true=phi_auto+NpRange(lag)*2*pi;
         vr(j,i) = -c*fprf/(4*pi*fc) * phi_true;
         

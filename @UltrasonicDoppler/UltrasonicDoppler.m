@@ -8,7 +8,7 @@ classdef UltrasonicDoppler
         ovt   % overwrite time
         iq    % IQ data (In phase Quadratura)
         t     % time
-        
+        dataf
     end
     methods (Static)
         
@@ -38,6 +38,8 @@ classdef UltrasonicDoppler
              t = repmat(t,1,size(h,2));
              % dopplerObj.iq = h.*exp(-1i*2*pi*(usObj.fc)*t);
              dopplerObj.iq = h.*exp(-1i*2*pi*(usObj.fc)*t);
+             dopplerObj.iq=h;
+             dopplerObj.dataf=dataf1;
              dopplerObj.t = t;
          end
         

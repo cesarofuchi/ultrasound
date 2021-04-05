@@ -1,12 +1,13 @@
 %% use to smooth echo distances
 function fdata=zerosFilter(data)
 
-    n=size(data,2)
+    n=length(data)
     dentro_intervalo=0;
     for i=1:n
         % valor dentro do intervalo?
         if(dentro_intervalo==0)
-             if(data(i)==0)
+             %if(data(i)==0)
+             if(isnan(data(i)))
                  if(i>1)                
                     amp1=data(i-1);
                     if(amp1>0)
@@ -20,7 +21,8 @@ function fdata=zerosFilter(data)
 
         else
             zcont=zcont+1;
-            if(data(i)>0)
+            %if(~isnan(data(i)>0)
+            if(~isnan(data(i)))
                 dentro_intervalo=0;
                 amp2=data(i);
                 i2=i;

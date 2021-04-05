@@ -1,8 +1,6 @@
 function US= tofFirstPeak(this,usData,range1,range2,c, corte,out,sinalRef)
-            %tofFirstPeak  Cálculo de tempo de trânsito pelo primeiro pico
-            %   [tt]=US_tt(dados,freq_transd,ciclos_onda,freq_amostragem,periodo_de_intere
-            %   sse1,periodo_de_interesse2)
-            %   dados: forma de onda
+            %tofFirstPeak  Cálculo de tempo de trânsito pelo primeiro pico            
+            %   usData: forma de onda
             %   freq_transd: frequência do transdutor
             %   ciclos_onda: quantos ciclos possui a forma de onda
             %   freq_amostragem: frequência de amostragem dos dados
@@ -23,12 +21,14 @@ function US= tofFirstPeak(this,usData,range1,range2,c, corte,out,sinalRef)
             %size(onda_padrao);
             % faço a correlação com a onda padrão, para melhorar a onda que pode estar
             % influenciada por ruídos. A autocorrelação é usada somente para isso!
-            offset1=range1(1);
+            offset1=range1(1);            
             offset2=range2(1);
-            %periodo_de_interesse3=fliplr(periodo_de_interesse2);
-            % achar os máximos
+            
+            %TODO            
+            % achar os máximos PODE usar sinal REF Aqui direto??            
             %[max1, posicao_eco1] = max(abs(hilbert(usData(range1,1))));
-            [max1, posicao_eco1] = max(sinalRef);
+            [max1, posicao_eco1] = max(abs(sinalRef));
+            
             posicao_eco1=posicao_eco1+offset1-1;
             
             novo=abs(hilbert(usData(range2,1)));            
